@@ -22,7 +22,11 @@ def rectanglerule(f, a, b, rectangles):
 
 # defined function
 def f(x):
-    return x**2
+    return 2*x*np.sin(x**2)
+
+# analytical integral of defined function
+def intf(x, a, b):
+    return -np.cos(b**2) + np.cos(a**2)
 
 if __name__ == "__main__":
 
@@ -33,7 +37,7 @@ if __name__ == "__main__":
     Npoints = 1
 
     # bounds
-    a = 1
+    a = 0
     b = 2
     
     # read the user-provided seed from the command line (if there)
@@ -57,12 +61,52 @@ if __name__ == "__main__":
 
     quadval, quaderr = integrate.fixed_quad(f, a, b, n = Npoints)
 
-    print(quadval)
+    print(f"method by quadratures: {quadval}")
 
     recval = rectanglerule(f, a, b, Nint)
 
-    print(recval)
+    print(f"rectangle rule: {recval}")
+
+    anval = intf(f, a, b)
+
+    print(f"analytical solution: {anval}")
+
+    quads = []
+
+    intervals = np.arange(1, 100, 1)
+
+    for i in intervals:
+        quadval, quaderr = integrate.fixed_quad(f, a, b, n=i)
+        analy_val = intf(f, a, b)
+        diff_quadval = (quadval - analy_val)/analy_val
+        quads.append(diff_quadval)
 
 
 
+    plt.figure()
+    plt.scatter(intervals, quads)
+    plt.xlim([0, max(intervals)])
+    plt.xlabel("Number of Evaluation Points", fontsize = 15)
+    plt.ylabel("% Error", fontsize = 15)
+    plt.title("QUadratures compared to Analytical Solution", fontsize = 15)
+    plt.tick_params(axis = 'both', labelsize = 13)
+    plt.show()
+   
+    recs = []
 
+    intervals = np.arange(1, 1000, 10)
+    for i in intervals:
+        recval = rectanglerule(f, a, b, i)
+        analy_val = intf(f, a, b)
+        diff_recval = (recval - analy_val)/analy_val
+        recs.append(diff_recval)
+
+    plt.figure()
+    plt.scatter(intervals, recs)
+    plt.xlim([0, max(intervals)])
+    plt.xlabel("Number of Sub-Intervals", fontsize = 15)
+    plt.ylabel("% Error", fontsize = 15)
+    plt.title("Rectangle Rule compared to Analytical Solution", fontsize = 15)
+    plt.tick_params(axis = 'both', labelsize = 13)
+    plt.show()
+ 
