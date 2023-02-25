@@ -58,47 +58,52 @@ if __name__ == "__main__":
         print ("Usage: %s [-Nint] number of intervals" % sys.argv[0])
         print
         sys.exit(1)  
-
+    
+    # find the area using quadratures for desired number of evalutaion points
     quadval, quaderr = integrate.fixed_quad(f, a, b, n = Npoints)
 
     print(f"method by quadratures: {quadval}")
 
+    # find the area using the rectangular rule for desired number of subintervals
     recval = rectanglerule(f, a, b, Nint)
 
     print(f"rectangle rule: {recval}")
 
+    # analytical evaluation of the integral
     anval = intf(f, a, b)
 
     print(f"analytical solution: {anval}")
 
+    ####################
+   
+    ## Quadratures vs Analytical Solution
     quads = []
 
-    intervals = np.arange(1, 100, 1)
+    intervals = np.arange(1, 10, 1)
 
     for i in intervals:
         quadval, quaderr = integrate.fixed_quad(f, a, b, n=i)
         analy_val = intf(f, a, b)
-        diff_quadval = (quadval - analy_val)/analy_val
+        diff_quadval = ((quadval - analy_val)/analy_val)*100
         quads.append(diff_quadval)
-
-
 
     plt.figure()
     plt.scatter(intervals, quads)
     plt.xlim([0, max(intervals)])
     plt.xlabel("Number of Evaluation Points", fontsize = 15)
     plt.ylabel("% Error", fontsize = 15)
-    plt.title("QUadratures compared to Analytical Solution", fontsize = 15)
+    plt.title("Quadratures compared to Analytical Solution", fontsize = 15)
     plt.tick_params(axis = 'both', labelsize = 13)
     plt.show()
    
+    ## Rectangular Rule vs Analytical Solution
     recs = []
 
-    intervals = np.arange(1, 1000, 10)
+    intervals = np.arange(1, 500, 10)
     for i in intervals:
         recval = rectanglerule(f, a, b, i)
         analy_val = intf(f, a, b)
-        diff_recval = (recval - analy_val)/analy_val
+        diff_recval = ((recval - analy_val)/analy_val)*100
         recs.append(diff_recval)
 
     plt.figure()
@@ -110,3 +115,27 @@ if __name__ == "__main__":
     plt.tick_params(axis = 'both', labelsize = 13)
     plt.show()
  
+    ## Rectangular Rule vs Quadratures
+    recs1 = []
+    recs2 = []
+
+    intervals = np.arange(1, 500, 10)
+    for i in intervals:
+        recval = rectanglerule(f, a, b, i)
+        quad_val1 = integrate.fixed_quad(f, a, b, n=1)[0]
+        diff_recval1 = recval - quad_val1
+        recs1.append(diff_recval1)
+        
+        quad_val2 = integrate.fixed_quad(f, a, b, n=2)[0]
+        diff_recval2 = recval - quad_val2
+        recs2.append(diff_recval2)
+
+    plt.figure()
+    plt.scatter(intervals, recs1)
+    plt.xlim([0, max(intervals)])
+    plt.xlabel("Number of Sub-Intervals", fontsize = 15)
+    plt.ylabel("Rectangle Rule - Quadratures", fontsize = 15)
+    plt.title("Methods Comparison (n=1)", fontsize = 15)
+    plt.tick_params(axis = 'both', labelsize = 13)
+    plt.show()
+    
