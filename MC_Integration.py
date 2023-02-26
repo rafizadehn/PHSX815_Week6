@@ -75,11 +75,6 @@ if __name__ == "__main__":
 
     print(f"rectangle rule: {recval}")
 
-    # analytical evaluation of the integral
-    anval = intf(f, a, b)
-
-    print(f"analytical solution: {anval}")
-
     ####################
    
     #### Monte Carlo Integration
@@ -98,6 +93,10 @@ if __name__ == "__main__":
 
     print(f"monte carlo solution: {ans}")
 
+    # analytical evaluation of the integral
+    anval = intf(f, a, b)
+
+    print(f"analytical solution: {anval}")
 
     ar10 = ar[0:int(0.1*len(ar))]
     ar20 = ar[0:int(0.2*len(ar))]
@@ -165,8 +164,6 @@ if __name__ == "__main__":
 
     int_err = (areas-analy_sol)/analy_sol * 100
 
-    print(int_err)
-
     ## Quadratures vs Analytical Solution
     quads = []
 
@@ -205,9 +202,6 @@ if __name__ == "__main__":
     plt.title("Rectangle Rule compared to Analytical Solution", fontsize = 15)
     plt.tick_params(axis = 'both', labelsize = 13)
     plt.show()
-    
-    print(len(percents))
-    print(len(areas))
 
     plt.figure()
     plt.scatter(percents, int_err)
