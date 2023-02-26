@@ -79,6 +79,16 @@ which would evaluate the rectangle sum with 1000 subintervals, the gaussian quad
 
 ### The Output
 
-The first output is within the terminal and includes the values of the calculated integrals:
+The first output is within the terminal and includes the values of the calculated integrals along with the newly generated monte carlo area:
+
+![Screenshot from 2023-02-26 15-32-30](https://user-images.githubusercontent.com/76142511/221439085-9fa56c96-4bde-4a38-8e1c-0fdebe12f5c0.png)
+
+The next output includes the error of the monte carlo method as a function of the number of randomly generated points:
+
+![mc1](https://user-images.githubusercontent.com/76142511/221439132-44af393d-6bfd-473c-8783-ddddf4d45cc6.png)
+
+
+
+
 
 
