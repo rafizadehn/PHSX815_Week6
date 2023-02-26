@@ -87,6 +87,7 @@ The next output includes the error of the monte carlo method as a function of th
 
 ![mc1](https://user-images.githubusercontent.com/76142511/221439132-44af393d-6bfd-473c-8783-ddddf4d45cc6.png)
 
+As you can see, there is lots of variation due to the random nature of the monte carlo method and may not be as reliable as the other numerical integration methods.
 
 
 
